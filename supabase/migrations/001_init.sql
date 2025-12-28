@@ -1,35 +1,3 @@
-# RachaRank
-
-Web-app full-stack para dejar de fumar en grupo con ranking en tiempo real, LP y rangos estilo LoL.
-
-## Stack
-- Next.js 14 + TypeScript + App Router
-- TailwindCSS (dark mode por defecto)
-- Supabase (Auth + Postgres + Realtime)
-- Zod para validación
-
-## Configuración local
-
-### 1) Variables de entorno
-Crea un `.env.local`:
-
-```
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-SUPABASE_SERVICE_ROLE_KEY=...
-ADMIN_EMAIL=admin@email.com
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
-
-### 2) Crear proyecto Supabase
-1. Crea un nuevo proyecto en Supabase.
-2. Copia `Project URL` y `anon key` en las variables de entorno.
-3. Copia el `service_role` key para tareas admin (solo server).
-
-### 3) Aplicar SQL (migrations)
-Ejecuta el SQL en el editor de Supabase o mediante la CLI.
-
-```
 -- Enable extensions
 create extension if not exists "pgcrypto";
 
@@ -114,21 +82,3 @@ create policy "checkins_select" on public.checkins
 create policy "checkins_insert" on public.checkins
   for insert to authenticated
   with check (auth.uid() = user_id);
-```
-
-También está en `supabase/migrations/001_init.sql`.
-
-### 4) Correr en local
-```
-npm install
-npm run dev
-```
-
-## Deploy en Vercel
-1. Importa el repo en Vercel.
-2. Añade las variables de entorno.
-3. Deploy.
-
-## Notas
-- Zona horaria usada para check-ins: `Europe/Madrid`.
-- Si no hay temporada activa, el dashboard lo indica y el check-in se bloquea.
